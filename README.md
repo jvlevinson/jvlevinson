@@ -10,9 +10,9 @@ I'm a passionate Network Architect with a passion for all things software develo
 - ⚡ Fun fact: I love music, technology and cars
 
 ## 🛠️ Technologies & Tools
-- **Languages:** Python, JavaScript, HTML, CSS, Typescript, Ruby, Bash, 
+- **Languages:** Python, JavaScript, HTML, CSS, Typescript, Ruby, Bash 
 - **Frameworks:** React, Node.js, Django
-- **Tools:** Git, Docker, VS Code, Jenkins
+- **Tools:** Git, Docker, VS Code, Jenkins, n8n
 - **Databases:** MySQL, MongoDB
 
 ## 🚀 Projects
