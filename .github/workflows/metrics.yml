@@ -1,0 +1,19 @@
+# .github/workflows/metrics.yml
+name: Update GitHub Metrics
+
+# When to run this workflow: on every push to main (or change as you like)
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  update-metrics:
+    runs-on: ubuntu-latest
+    steps:
+      # 1) Check out your repo
+      - uses: actions/checkout@v3
+
+      # 2) Run the metrics embed step
+      - name: Metrics embed
+        uses: lowlighter/metrics@v3.34
