@@ -1,4 +1,12 @@
-# Hi there, I'm Jordan! 👋
+<p align="center">
+  <img 
+    src="https://media.licdn.com/dms/image/v2/D5616AQHA7DVxZw72-g/profile-displaybackgroundimage-shrink_350_1400/profile-displaybackgroundimage-shrink_350_1400/0/1730076835866?e=1755734400&v=beta&t=osa43USip1gvGfB3diuzGMZCAshww5beUbjqaSsdR8s" 
+    alt="Banner" 
+    width="100%" 
+  />
+</p>
+
+**Hi there, I'm Jordan!** 👋
 
 **From Network Architect to Full-Stack App Developer & DevOps Automation Engineer — powering AI-driven solutions in cloud ☁️ and enterprise environments 🏢.**
 
