@@ -13,7 +13,7 @@
 I’m a Network Architect turned Full-Stack App Developer & DevOps Automation Engineer, building resilient networks and intelligent applications on-premises and in the cloud. From architecting infrastructure blueprints to authoring Python, JavaScript, and TypeScript code, I streamline CI/CD pipelines and automate every step for maximum reliability. My goal is to empower teams with scalable, secure solutions that accelerate growth and let organizations focus on innovation rather than manual tasks.
 
 ## About Me 📝
-I’m Jordan V. Levinson—a reliability, automation, and innovation enthusiast who believes in **proactive** over **reactive** solutions. Through my “Future Lazy Engineering” approach, I invest extra effort up front to anticipate edge cases, then deliver the bare-minimum, modular code that scales. By doing the work up front, I prevent the cascading tech debt of Band-Aid fixes—what might have been a quick two-hour patch can otherwise balloon into a 5–8 week project ⚠️.  
+I’m a reliability, automation, and innovation enthusiast who believes in **proactive** over **reactive** solutions. Through my “Future Lazy Engineering” approach, I invest extra effort up front to anticipate edge cases, then deliver the bare-minimum, modular code that scales. By doing the work up front, I prevent the cascading tech debt of Band-Aid fixes—what might have been a quick two-hour patch can otherwise balloon into a 5–8 week project ⚠️.  
 
 By day, I design and secure enterprise-scale networks 🌐; by night, I build React/TypeScript apps ⚛️, script Python automations 🐍, and weave AI 🤖 into every workflow.
 
