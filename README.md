@@ -86,9 +86,6 @@ I defined a minimal JSON schema and SDK-driven automation for SD-WAN provisionin
 **MongoDB 🍃** _Proficient • Document store solutions_  
 **Redis 🗄️** _Familiar • Caching and session storage_
 
-      </td>
-      <td width="40%" valign="top" style="border: none;">
-
 ### **AI/ML & Emerging Tech**
 <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px;">
   <img src="https://img.shields.io/badge/TensorFlow-FF6F00?style=flat-square&logo=tensorflow&logoColor=white" alt="TensorFlow" />
@@ -114,8 +111,6 @@ _Exploring • AI-powered automation tools_
 **AI Assistants 🤖** _OpenAI Codex, Claude Code, Copilot_  
 **Network Tools 📡** _Wireshark, TCPdump for troubleshooting_
 
-      </td>
-    </tr>
   </table>
 </div>
 
