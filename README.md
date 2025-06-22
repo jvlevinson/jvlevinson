@@ -125,10 +125,9 @@ A brief description of what this project is about, the technologies used, and it
 -->
 
 ## 📫 Connect with Me
-- [LinkedIn](https://www.linkedin.com/in/jvlevinson) 🔗  
+<!-- - [LinkedIn](https://www.linkedin.com/in/jvlevinson) 🔗 --> 
 <!-- - [Twitter](https://twitter.com/jvlevinson) 🐦 -->
 
-![Hi there 👋 I'm Jordan !](./github-banner.png)
 
 <!-- SOCIAL BADGES
 <a href="https://twitter.com/jvlevinson">
