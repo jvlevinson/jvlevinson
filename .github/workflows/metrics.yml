@@ -18,7 +18,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: jvlevinson/metrics@latest
+      - uses: lowlighter/metrics@latest
         with:
           # Your GitHub token stored in secrets
           token: ${{ secrets.METRICS_TOKEN }}
@@ -54,7 +54,6 @@ jobs:
           plugin_repositories_featured: username/repo-name
 
           # Show contribution calendar in isometric view
-          plugin_isocalendar: yes
           plugin_isocalendar_duration: half-year
 
           # Show recent activity
