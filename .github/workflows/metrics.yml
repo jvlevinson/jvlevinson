@@ -22,7 +22,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: jvlevinson/metrics@latest
+      - uses: jvlevinson/metrics
         with:
           token: ${{ secrets.METRICS_TOKEN }}
           user: ${{ github.repository_owner }}
@@ -66,7 +66,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: jvlevinson/metrics@latest
+      - uses: jvlevinson/metrics
         with:
           token: ${{ secrets.METRICS_TOKEN }}
           user: ${{ github.repository_owner }}
@@ -109,7 +109,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: jvlevinson/metrics@latest
+      - uses: jvlevinson/metrics
         with:
           token: ${{ secrets.METRICS_TOKEN }}
           user: ${{ github.repository_owner }}
@@ -149,7 +149,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: jvlevinson/metrics@latest
+      - uses: jvlevinson/metrics
         with:
           token: ${{ secrets.METRICS_TOKEN }}
           user: ${{ github.repository_owner }}
@@ -191,7 +191,7 @@ jobs:
     # Only run this job manually or on main branch pushes
     if: github.event_name == 'workflow_dispatch' || github.event_name == 'push'
     steps:
-      - uses: jvlevinson/metrics@latest
+      - uses: jvlevinson/metrics
         with:
           token: ${{ secrets.METRICS_TOKEN }}
           user: ${{ github.repository_owner }}
