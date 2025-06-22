@@ -147,4 +147,8 @@ A brief description of what this project is about, the technologies used, and it
 
 ## 📊 GitHub Metrics
 
-<img src="./assets/github-metrics.svg" alt="GitHub Metrics" width="100%" />
+<img src="./assets/github-metrics.svg" alt="GitHub Metrics" width="50%" />
+
+<p align="center">
+  <img src="https://komarev.com/ghpvc/?username=jvlevinson&style=flat-square&color=blue" alt="Profile Views" />
+</p>
