@@ -6,7 +6,7 @@
   />
 </p>
 
-**Hi there, I'm Jordan!** 👋
+# **Hi there, I'm Jordan!** 👋
 
 **From Network Architect to Full-Stack App Developer & DevOps Automation Engineer — powering AI-driven solutions in cloud ☁️ and enterprise environments 🏢.**
 
