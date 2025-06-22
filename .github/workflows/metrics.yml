@@ -53,10 +53,6 @@ jobs:
           plugin_repositories: yes
           plugin_repositories_featured: username/repo-name
 
-          # Show contribution calendar in isometric view
-          plugin_isocalendar: yes
-          plugin_isocalendar_duration: half-year
-
           # Show recent activity
           plugin_activity: yes
           plugin_activity_limit: 5
