@@ -14,13 +14,6 @@ I'm a Network Architect turned Full-Stack App Developer & DevOps Automation Engi
 
 ---
 
-<!-- NEW: Profile overview with achievements appears early to establish credibility -->
-<p align="center">
-  <img src="./assets/profile-achievements.svg" alt="GitHub Profile & Achievements" width="100%" />
-</p>
-
----
-
 ## About Me 📝
 I'm a reliability, automation, and innovation enthusiast who believes in **proactive** over **reactive** solutions. Through my "Future Lazy Engineering" approach, I invest extra effort up front to anticipate edge cases, then deliver the bare-minimum, modular code that scales. By doing the work up front, I prevent the cascading tech debt of Band-Aid fixes—what might have been a quick two-hour patch can otherwise balloon into a 5–8 week project ⚠️.  
 
