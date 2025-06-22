@@ -96,4 +96,4 @@ A brief description of what this project is about, the technologies used, and it
 
 ## Public contributions
 
-![Metrics](./github-metrics.svg)
+![Metrics](./assets/github-metrics.svg)
