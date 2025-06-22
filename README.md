@@ -37,6 +37,8 @@ I defined a minimal JSON schema and SDK-driven automation for SD-WAN provisionin
   <img src="https://img.shields.io/badge/Ruby-CC342D?style=flat-square&logo=ruby&logoColor=white" alt="Ruby" />
 </div>
 
+---
+
 ### **Frameworks & Libraries**
 
 **React ⚛️** _Proficient • Multiple client applications_  
@@ -50,6 +52,8 @@ I defined a minimal JSON schema and SDK-driven automation for SD-WAN provisionin
   <img src="https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=node.js&logoColor=white" alt="Node.js" />
   <img src="https://img.shields.io/badge/n8n-EA4B71?style=flat-square&logo=n8n&logoColor=white" alt="n8n" />
 </div>
+
+---
 
 ### **Infrastructure & DevOps**
 
@@ -65,6 +69,8 @@ I defined a minimal JSON schema and SDK-driven automation for SD-WAN provisionin
   <img src="https://img.shields.io/badge/Jenkins-D24939?style=flat-square&logo=jenkins&logoColor=white" alt="Jenkins" />
 </div>
 
+---
+
 ### **Cloud & Platforms**
 
 **AWS ☁️** _Proficient • Primary cloud infrastructure_  
@@ -76,6 +82,8 @@ I defined a minimal JSON schema and SDK-driven automation for SD-WAN provisionin
   <img src="https://img.shields.io/badge/Azure-0078D4?style=flat-square&logo=microsoft-azure&logoColor=white" alt="Azure" />
   <img src="https://img.shields.io/badge/Cisco-1BA0D7?style=flat-square&logo=cisco&logoColor=white" alt="Cisco" />
 </div>
+
+---
 
 ### **Databases & Storage**
 
@@ -91,6 +99,8 @@ I defined a minimal JSON schema and SDK-driven automation for SD-WAN provisionin
   <img src="https://img.shields.io/badge/Redis-DC382D?style=flat-square&logo=redis&logoColor=white" alt="Redis" />
 </div>
 
+---
+
 ### **AI/ML & Emerging Tech**
 
 **scikit-learn, TensorFlow, PyTorch 📊**  
@@ -104,6 +114,8 @@ _Exploring • AI-powered automation tools_
   <img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=flat-square&logo=pytorch&logoColor=white" alt="PyTorch" />
   <img src="https://img.shields.io/badge/OpenAI-412991?style=flat-square&logo=openai&logoColor=white" alt="OpenAI" />
 </div>
+
+---
 
 ### **Development Tools**
 
@@ -120,6 +132,8 @@ _Exploring • AI-powered automation tools_
 
   </table>
 </div>
+
+---
 
 <!-- ## 🚀 Projects
 
