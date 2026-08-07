@@ -15,8 +15,8 @@ ai_context:
     next: null
   metadata:
     created: 2026-08-07 03:30:36 PM CDT
-    updated: 2026-08-07 03:51:24 PM CDT
-    version: v1.0.0
+    updated: 2026-08-07 05:01:01 PM CDT
+    version: v1.2.0
     category: chat_summary
     status: active
     revision_id: "JVLEVINSON-chat-001"
@@ -30,9 +30,9 @@ ai_context:
 **Start Time:** 2026-08-07 03:20:00 PM CDT
 **End Time:** [IN PROGRESS]
 **Duration:** [IN PROGRESS]
-**Last Updated:** 2026-08-07 03:51:24 PM CDT
-**Session Type:** NEW-CHAT-Repository initialization and documentation system bootstrap
-**Primary Focus:** Project memory, local tooling, and documentation scaffolding for the `jvlevinson` GitHub profile repository
+**Last Updated:** 2026-08-07 05:01:01 PM CDT
+**Session Type:** NEW-CHAT-Repository initialization, documentation bootstrap, and multi-agent profile audit
+**Primary Focus:** Project memory, local tooling, documentation scaffolding, and a three-layer audit that diagnosed and retired the failing metrics CI
 **Final Status:** IN PROGRESS
 **Participants:** User, Claude
 
@@ -154,6 +154,26 @@ Before this session the repository tracked exactly four files: `README.md`, `.gi
 - Integration into `main` is the owner's explicit decision and is not to be initiated autonomously.
 - Repo-specific consequence: pushing branch `001` does **not** fire the metrics workflow (its `push:` trigger is scoped to `branches: [main]`), but the daily `schedule:` still runs. Separately, `committer_branch: main` means the action writes to `main` even when run from a branch.
 - Recorded as a standing rule in `/CLAUDE.md`, not just here.
+
+### 7. Multi-Agent Profile Audit (28 agents across two workflows)
+- **Layer design (user-specified):** Layer 1 research/write -> Layer 2 adversarial governance -> Layer 3 analysis -> review on top.
+- **Workflow 1** (`wf_8a77e487-dfd`, 19 agents, 1.66M tokens): 8 research dimensions, 8 governance verifiers, 2 analysts, 1 completeness critic. Verdicts: 97 CONFIRMED / 18 OVERSTATED / 3 UNVERIFIABLE / 2 REFUTED.
+- **Workflow 2** (`wf_afec8720-485`, 9 agents, 779K tokens): metrics-replacement survey with adversarial verification.
+- **Governance caught a fabrication:** an analysis agent invented a claim that `/CLAUDE.md` leaked host details (LAN subnet, SSH port, firewall rules) and built a standing `git add -A` prohibition on it. Verified false — `grep -cE '10\\.1\\.10|2323|mulder02|nftables'` returns 0.
+- **Governance produced the real 15m50s explanation** by reading action source: `retry()` sleeps after the FINAL failed attempt (no last-iteration guard); 3 x 300s = 900s + ~50s healthy runtime = 15m50s exactly.
+
+### 8. Diagnosis of the "433 failing deployments"
+- **433 was never a failure count.** It is the total deployment records ever minted; ~386 succeeded, **47 failed**. None ever deployed anything.
+- Records were created solely by the job-level `environment: production` key — GitHub mints a Deployment object per run of any job referencing an environment.
+- **Root cause of the failures:** `METRICS_TOKEN` classic PAT created 2025-06-22, expired ~2026-06-22; first failure 2026-06-23. Annotation `Bad credentials`.
+- Stray GitHub **Environment** literally named `METRICS_TOKEN` found alongside `production` — a category error (Environment created where a Secret was meant). Both hold no secrets and no protection rules.
+- Confirmed **no GitHub Pages**: `has_pages: false`, `/pages` -> 404. A profile README is not a Pages site.
+
+### 9. Decision — retire the metrics image
+- Verified the committed SVG reported **HTML 39.65% / SCSS 32.98% / JavaScript 16.6% / Python 5.84%, zero TypeScript**, against a README positioning Python and TypeScript as daily drivers. It could only see 70 public repos against 108 private.
+- Upstream frozen: last release 2023-09-13, last human commit on `master` 2023-12-18. `@latest` is a mutable **branch**, not a tag.
+- Security: PAT written to plaintext `.env` on the runner (with `rm .env` sequenced after `docker run` under `bash -e`, so it survived the 47 aborted runs), passwordless root via `sudo mkdir -p`, mutable `ghcr.io` tag defeating SHA-pinning.
+- **Owner decision:** delete workflow and SVG. Leave the 433 deployment records (cosmetic, invisible on the profile). Leave git history alone (rewriting breaks every clone).
 
 ## Related Documentation
 - [/CLAUDE.md](/CLAUDE.md) — repository operating rules

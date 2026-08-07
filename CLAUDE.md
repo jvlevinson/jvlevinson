@@ -4,39 +4,52 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this repository is
 
-`jvlevinson/jvlevinson` — a GitHub **profile repository**. Because the repo name matches the account name, `README.md` renders as the landing page of <https://github.com/jvlevinson>. There is no application, build system, package manager, or test suite here; the entire repo is four tracked files:
+`jvlevinson/jvlevinson` — a GitHub **profile repository**. Because the repo name matches the account name, `README.md` renders as the landing page of <https://github.com/jvlevinson>. There is no application, build system, package manager, or test suite.
 
 | Path | Role |
 |---|---|
-| `README.md` | The profile page itself. Hand-edited. |
-| `.github/workflows/metrics.yml` | CI that regenerates the metrics image. |
-| `assets/github-metrics.svg` | **Generated artifact — never hand-edit.** |
-| `.gitignore` | Ignores `.history/` and `experimental/`. |
+| `README.md` | The profile page itself. The only file that renders publicly. |
+| `.gitignore` | See its own header comments — it documents its reasoning inline. |
+| `docs/` | Lite documentation scaffold; see `/docs/01-project/README.md`. |
+
+A profile README is **not** GitHub Pages. This repo has no Pages site (`has_pages: false`) and no `username.github.io` build. GitHub renders `README.md` directly on the profile page. Don't conflate the two.
 
 ## Branching — never commit to `main`
 
-**All work happens on a branch. Never commit to `main` directly, and never merge directly into `main`.** Branches are numbered to match the chat session that produced them — session `00-YYYYMMDD-001-CS-*` → branch `001`. Integration into `main` is the owner's decision, made explicitly; do not initiate it.
+**All work happens on a branch. Never commit to `main` directly, and never merge directly into `main`.** Branches are numbered to match the chat session that produced them — session `00-YYYYMMDD-001-CS-*` → branch `001`. Integration into `main` is the owner's explicit decision; do not initiate it.
 
-Two consequences specific to this repo:
+Note that **scheduled workflows only ever run from the default branch.** If a workflow is ever reintroduced here, changes to it are inert until they reach `main` — a fix that looks applied on a branch is not actually running.
 
-- Pushing a work branch does **not** trigger the metrics workflow — its `push:` trigger is scoped to `branches: [main]`. The daily `schedule:` still fires regardless of branch.
-- The workflow hardcodes `committer_branch: main`, so if it ever runs from a branch it still commits its SVG to `main`. Editing the workflow on a branch does not sandbox its write target.
+## The metrics workflow was deliberately removed — do not reinstate it
 
-## The metrics loop (important before any commit)
+Until 2026-08-07 this repo ran `lowlighter/metrics` on a daily cron to generate `assets/github-metrics.svg` and commit it back to `main`. Both the workflow and the SVG were **deleted on purpose**. If you are tempted to "restore the missing metrics image," don't — read this first:
 
-`.github/workflows/metrics.yml` runs [`lowlighter/metrics`](https://github.com/lowlighter/metrics) and uses `output_action: commit` with `committer_branch: main`. It fires on **push to `main`**, on a **daily cron (00:00 UTC)**, and via `workflow_dispatch`.
+- **It had been failing for 47 consecutive runs** since 2026-06-23, because the `METRICS_TOKEN` classic PAT hit its 1-year expiry (created 2025-06-22). Every run logged `Bad credentials`.
+- **Upstream is frozen.** Last release v3.34 on 2023-09-13; last human commit on `master` 2023-12-18. The repo is not archived, but its 2026 activity is Dependabot noise.
+- **The security posture is bad.** It is a composite action that writes every input — *including the PAT* — to a plaintext `.env` on the runner, takes passwordless root via `sudo mkdir -p`, and docker-pulls a **mutable** `ghcr.io` tag, so pinning the action to a SHA pins nothing. `@latest` is a mutable *branch*, not a tag.
+- **The output actively misrepresented the owner.** The final SVG reported HTML 39.65% / SCSS 32.98% / JavaScript 16.6% and **zero TypeScript**, against a README positioning Python and TypeScript as daily drivers — because it could only see public repos (70 public vs 108 private).
+- **It cost ~170 KB/day** in committed SVG churn; roughly 400 such commits are why this 3-file repo carries ~3.5 MB of history.
 
-Consequences:
+GitHub already renders the contribution heatmap, activity timeline, achievements, and pinned repositories natively on the profile page, above the README, for free. That covers what a reader actually values.
 
-- Every push you make to `main` triggers a workflow run that **pushes a follow-up commit back to `main`** (message: `Update metrics`, touching only `assets/github-metrics.svg`). The long chain of `Update metrics` commits in the log is this bot, not the author.
-- **Always `git pull --rebase` before starting work**, or your push will be rejected by the bot's commit.
-- Regenerating the SVG locally is pointless — CI overwrites it. To refresh it on demand, trigger the workflow (`gh workflow run "Update GitHub Metrics"`) rather than editing the asset.
-- The job requires the `METRICS_TOKEN` secret, scoped to the `production` GitHub Environment. If runs fail with an auth error, that secret/environment binding is the first thing to check — not the workflow YAML.
+**Consequences of the removal:** the `Update metrics` commits on `main` have stopped, so the old "always `git pull --rebase` before working" hazard is gone. The `METRICS_TOKEN` repository secret and the `production` / `METRICS_TOKEN` environments are now unused and can be deleted. The 433 historical deployment records were left in place deliberately — they are cosmetic and invisible on the profile page.
 
 ## Editing README.md
 
-- GitHub's markdown sanitizer **strips inline `style` attributes**. The `<div style="display: flex; ...">` wrappers around the shields.io badge groups therefore have no effect on the rendered page; badges simply flow inline. Don't invest in CSS-based layout — use tables, `<p align="center">`, or plain markdown for layout.
-- Trailing double-spaces are load-bearing (they produce the line breaks inside the "Languages / Frameworks / …" skill blocks). Don't let a formatter trim them.
-- The banner `<img>` at the top points at a LinkedIn CDN URL carrying an **expiry parameter** (`e=…`). It will 404 once that timestamp passes; if the banner is broken, the fix is to host the image in `assets/` and reference it relatively, as `README.md` already does for the metrics SVG.
-- Several blocks are intentionally commented out (`## 🚀 Projects`, Twitter badge, LinkedIn/Twitter bullet links). Leave them commented unless asked to enable them — they are placeholders, not accidents.
-- Content is first-person biography for Jordan V. Levinson. Never invent credentials, employers, metrics, or achievements; only edit what the user supplies.
+- GitHub's markdown sanitizer **strips inline `style` attributes**. Don't invest in CSS-based layout — use tables, `<p align="center">`, or plain markdown. (The previous README had seven `<div style="display: flex">` wrappers that never rendered, plus an orphaned `</table>` with no opener.)
+- **Host images in the repo.** The previous banner pointed at a LinkedIn CDN URL carrying an expiry parameter and returned HTTP 403. External image hosts are a dependency on the most-visited page in the account.
+- Give every `<img>` a descriptive `alt`. Prefer explicit pixel widths over percentages — the profile column is narrower than a repo README's.
+- Content is first-person biography for Jordan V. Levinson. Never invent credentials, employers, metrics, or achievements; only edit what the owner supplies.
+
+## Documentation and timestamps
+
+Docs live under `docs/` with numeric prefixes; see `/docs/00-notes/02-documentation_structure_guide.md` for naming, linking, and frontmatter rules.
+
+**Never hand-type a timestamp.** Use the deployed script (gitignored, local tooling):
+
+```bash
+bash .scripts/cmd/bash/update-timestamp.sh -f <file> -s created   # new document
+bash .scripts/cmd/bash/update-timestamp.sh -f <file>              # every later edit
+```
+
+It rewrites the 4-space-indented `created:`/`updated:` keys under `metadata:` — preserve that indentation or it silently no-ops. It appends to `reports/logs/running.log` **relative to the current working directory**, so run it from the repository root.
