@@ -1,2 +1,66 @@
+# .gitignore — jvlevinson/jvlevinson (GitHub profile repository)
+#
+# SCOPE: artifacts a clone of THIS repo can produce. OS cruft (.DS_Store,
+# Thumbs.db, desktop.ini, *~) is deliberately ABSENT — that belongs in the
+# per-user global excludes file:
+#   git config --global core.excludesFile ~/.config/git/ignore
+#
+# Verify a rule with:  git status --porcelain --ignored
+# NOT with `git check-ignore` alone — it exits 0 on a NEGATED match too, so
+# `check-ignore .env.example` succeeds even though the file is tracked.
+
+
+# --- Editor local history ----------------------------------------------------
+# VS Code "Local History" extension. Unanchored: it can write at any depth.
+# Kept in-repo rather than global so the rule survives fresh clones and CI.
 .history/
-experimental/
+
+
+# --- Personal scratch space --------------------------------------------------
+# Work-in-progress that must never render on a public profile page.
+# Anchored: only the repo-root directory, never a nested `experimental/`.
+/experimental/
+
+
+# --- Local tooling deployed into this repo -----------------------------------
+# Timestamp scripts and their run log. Machine-local; must not reach the
+# public profile. Anchored so a future docs/01-project/reports/ is never
+# silently swallowed — unanchored `reports/` matches at ANY depth.
+/.scripts/
+/reports/
+
+
+# --- Secrets -----------------------------------------------------------------
+# A guard, not a control: this repo reads no env vars, and GitHub secret
+# scanning + push protection are the mechanisms that would actually fire.
+# Two lines against an asymmetric downside on a public repo.
+#
+# This negation is safe because `.env.*` matches FILES. Negation can NEVER
+# rescue a file whose parent directory is excluded — git does not descend into
+# excluded directories. There are no directory negations in this file.
+.env
+.env.*
+!.env.example
+
+
+# --- AI coding-agent local artifacts -----------------------------------------
+# Histories, caches and logs only. Agent INSTRUCTION files stay TRACKED on
+# purpose — CLAUDE.md is shared via source control. Do NOT blanket-ignore
+# `.claude/`.
+CLAUDE.local.md
+.claude/*.local.json
+.claude/**/*.log
+
+
+# --- Deliberately NOT ignored — do not add rules matching these ---------------
+# The metrics workflow commits assets/github-metrics.svg back to main
+# (output_action: commit, committer_branch: main). Any `*.svg`, `assets/`, or
+# pasted-in Images.gitignore rule would break that round-trip and make
+# `git status` lie about the generated file.
+#
+#   README.md                  <- the profile page itself
+#   .github/workflows/         <- metrics.yml
+#   assets/github-metrics.svg  <- generated; never hand-edit
+#   .gitignore
+#   CLAUDE.md                  <- repo-scoped, no host details
+#   docs/                      <- documentation scaffold
