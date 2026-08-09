@@ -9,6 +9,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 | Path | Role |
 |---|---|
 | `README.md` | The profile page itself. The only file that renders publicly. |
+| `.github/workflows/metrics.yml` | Daily CI that regenerates the metrics image. **Currently failing.** |
+| `assets/github-metrics.svg` | **Generated artifact — never hand-edit.** Embedded at the bottom of the README. |
 | `.gitignore` | See its own header comments — it documents its reasoning inline. |
 | `docs/` | Lite documentation scaffold; see `/docs/01-project/README.md`. |
 
@@ -20,19 +22,27 @@ A profile README is **not** GitHub Pages. This repo has no Pages site (`has_page
 
 Note that **scheduled workflows only ever run from the default branch.** If a workflow is ever reintroduced here, changes to it are inert until they reach `main` — a fix that looks applied on a branch is not actually running.
 
-## The metrics workflow was deliberately removed — do not reinstate it
+## The metrics loop
 
-Until 2026-08-07 this repo ran `lowlighter/metrics` on a daily cron to generate `assets/github-metrics.svg` and commit it back to `main`. Both the workflow and the SVG were **deleted on purpose**. If you are tempted to "restore the missing metrics image," don't — read this first:
+`.github/workflows/metrics.yml` runs [`lowlighter/metrics`](https://github.com/lowlighter/metrics) with `output_action: commit` and `committer_branch: main`. It fires on **push to `main`**, on a **daily cron (00:00 UTC)**, and via `workflow_dispatch`. It is a wanted feature — keep it working.
 
-- **It had been failing for 47 consecutive runs** since 2026-06-23, because the `METRICS_TOKEN` classic PAT hit its 1-year expiry (created 2025-06-22). Every run logged `Bad credentials`.
-- **Upstream is frozen.** Last release v3.34 on 2023-09-13; last human commit on `master` 2023-12-18. The repo is not archived, but its 2026 activity is Dependabot noise.
-- **The security posture is bad.** It is a composite action that writes every input — *including the PAT* — to a plaintext `.env` on the runner, takes passwordless root via `sudo mkdir -p`, and docker-pulls a **mutable** `ghcr.io` tag, so pinning the action to a SHA pins nothing. `@latest` is a mutable *branch*, not a tag.
-- **The output actively misrepresented the owner.** The final SVG reported HTML 39.65% / SCSS 32.98% / JavaScript 16.6% and **zero TypeScript**, against a README positioning Python and TypeScript as daily drivers — because it could only see public repos (70 public vs 108 private).
-- **It cost ~170 KB/day** in committed SVG churn; roughly 400 such commits are why this 3-file repo carries ~3.5 MB of history.
+- Every push to `main` triggers a run that **commits back to `main`** (message `Update metrics`, touching only `assets/github-metrics.svg`). The long chain of `Update metrics` commits is this bot, not the author. **`git pull --rebase` before starting work.**
+- Regenerating the SVG locally is pointless — CI overwrites it. Refresh on demand with `gh workflow run "Update GitHub Metrics"`.
 
-GitHub already renders the contribution heatmap, activity timeline, achievements, and pinned repositories natively on the profile page, above the README, for free. That covers what a reader actually values.
+### Current failure — expired PAT
 
-**Consequences of the removal:** the `Update metrics` commits on `main` have stopped, so the old "always `git pull --rebase` before working" hazard is gone. The `METRICS_TOKEN` repository secret and the `production` / `METRICS_TOKEN` environments are now unused and can be deleted. The 433 historical deployment records were left in place deliberately — they are cosmetic and invisible on the profile page.
+Failing since **2026-06-23**, every run logging `Bad credentials`. The `METRICS_TOKEN` repository secret was created **2025-06-22**; it hit the 1-year classic-PAT expiry. **The fix is rotating the token** — the owner handles this. The secret is repo-level and resolves fine; the `production` environment holds nothing, so the environment is not the problem.
+
+When creating the replacement: **classic PAT with zero scopes.** The action writes every input including the PAT to a plaintext `.env` on the runner, so a `repo`-scoped token there is a standing credential to all 108 private repos. Fine-grained PATs are hard-blocked by the action.
+
+### Known caveats — document, don't act on unilaterally
+
+- Failing runs burn ~15m50s vs ~1m0s healthy, because the action's `retry()` sleeps after the *final* failed attempt too: 3 × 300s = 900s. `retries_delay: 0` fixes it.
+- `@latest` is a mutable **branch**, not a tag — the repo is not actually pinned. Upstream's last release was 2023-09-13.
+- The job-level `environment: production` key is what mints a GitHub Deployment record on every run — 433 of them so far, deploying nothing. Removing that key stops new ones; the historical records are cosmetic and were deliberately left alone.
+- The SVG can only see public repos (70 public vs 108 private), so its language chart under-represents the owner's actual work.
+
+These are improvements available on request — a SHA pin, `timeout-minutes`, the retry fix, dropping the `environment:` key. **None of them remove the metrics image.** Do not propose deleting the workflow again; that was considered and rejected.
 
 ## Editing README.md
 
