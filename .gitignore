@@ -53,11 +53,17 @@ CLAUDE.local.md
 
 
 # --- Deliberately NOT ignored — do not add rules matching these ---------------
-# Everything this repo publishes is a tracked source file. If you ever add an
-# image to the profile, host it HERE rather than on an external CDN, and do not
-# paste in a generic Images.gitignore that would silently exclude it.
+# The metrics workflow commits assets/github-metrics.svg back to main
+# (output_action: commit, committer_branch: main). Any `*.svg`, `assets/`, or
+# pasted-in Images.gitignore rule would break that round-trip and make
+# `git status` lie about the generated file.
 #
-#   README.md   <- the profile page itself
+# If you add further images to the profile, host them HERE rather than on an
+# external CDN — the README's banner already 403s for exactly that reason.
+#
+#   README.md                  <- the profile page itself
+#   .github/workflows/         <- metrics.yml
+#   assets/github-metrics.svg  <- generated; never hand-edit
 #   .gitignore
-#   CLAUDE.md   <- repo-scoped operating rules, no host details
-#   docs/       <- documentation scaffold
+#   CLAUDE.md                  <- repo-scoped operating rules, no host details
+#   docs/                      <- documentation scaffold
