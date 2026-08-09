@@ -36,9 +36,14 @@ GitHub already renders the contribution heatmap, activity timeline, achievements
 
 ## Editing README.md
 
-- GitHub's markdown sanitizer **strips inline `style` attributes**. Don't invest in CSS-based layout — use tables, `<p align="center">`, or plain markdown. (The previous README had seven `<div style="display: flex">` wrappers that never rendered, plus an orphaned `</table>` with no opener.)
-- **Host images in the repo.** The previous banner pointed at a LinkedIn CDN URL carrying an expiry parameter and returned HTTP 403. External image hosts are a dependency on the most-visited page in the account.
-- Give every `<img>` a descriptive `alt`. Prefer explicit pixel widths over percentages — the profile column is narrower than a repo README's.
+**The README is the owner's voice. Do not restructure, condense, or "modernize" it without an explicit request for that.** A 2026-08-07 rewrite cut it from 173 lines to 48 — collapsing the badge groups into a table and flattening the prose — and was rejected outright. Improving the README means fixing what is broken *in place*, not replacing it. Ask before touching tone, length, or structure.
+
+Known issues in the current README, documented but **not** to be "fixed" unilaterally:
+
+- GitHub's markdown sanitizer **strips inline `style` attributes**, so the seven `<div style="display: flex">` wrappers around the badge groups do not render as flex. There is also an orphaned `</table>` at line 133 with no matching opener (verified: zero `<table` in the file), which GitHub silently drops. Layout that survives the sanitizer means tables, `<p align="center">`, or plain markdown.
+- The banner `<img>` points at a LinkedIn CDN URL carrying an expiry parameter and currently returns **HTTP 403**. Hosting it in the repo would fix it.
+- 3 of 31 `<img>` tags lack an `alt` attribute.
+- Trailing double-spaces are load-bearing line breaks in the skills blocks. Don't let a formatter trim them.
 - Content is first-person biography for Jordan V. Levinson. Never invent credentials, employers, metrics, or achievements; only edit what the owner supplies.
 
 ## Documentation and timestamps
